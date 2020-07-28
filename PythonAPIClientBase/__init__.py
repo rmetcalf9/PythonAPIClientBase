@@ -2,3 +2,6 @@
 
 from .APIClientBase import APIClientBase
 from .LoginSession import LoginSession, NullLoginSession
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions
