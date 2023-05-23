@@ -3,7 +3,7 @@ import versioneer
 
 #Dependancy lists maintained here and in tox.ini
 sp_install_requires = [
-  'requests==2.28.1',
+  'requests==2.31.0',
   'pytz==2019.3',
   'python-dateutil==2.8.1'
 ]
