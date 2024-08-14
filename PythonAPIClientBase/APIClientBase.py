@@ -2,7 +2,7 @@ import requests
 from .Mock import MockClass
 import threading
 from urllib.parse import urlencode
-from VerboseLogging import VerboseLoggingNullLogClass
+from .VerboseLogging import VerboseLoggingNullLogClass
 
 class APIClientException(Exception):
   result = None
