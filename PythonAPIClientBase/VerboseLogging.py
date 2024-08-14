@@ -47,7 +47,10 @@ class VerboseLoggingOutputAllClass(VerboseLoggingBaseClass):
         print("params", params)
         print("headers:")
         for header in headers:
-            print("  ", header + ":", headers[header])
+            if header == "Authorization":
+                print("  ", header + ":", "REDACTED_BY_APL_CLIENT_LOGGER")
+            else:
+                print("  ", header + ":", headers[header])
         if self.include_data:
             print("data", data)
         print("------------------")
@@ -59,6 +62,7 @@ class VerboseLoggingOutputAllClass(VerboseLoggingBaseClass):
         print("------------------")
         print("API Client Response")
         print("------------------")
-        print(result)
+        print("Status:", result.status_code)
+        print("Text:", result.text)
         print("------------------")
         print("")

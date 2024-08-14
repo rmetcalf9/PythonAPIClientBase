@@ -77,7 +77,7 @@ class APIClientBase():
 
     self.verboseLogging.log_call(
       reqFn=reqFn.__name__,
-      url=url,
+      url=self.baseURL + url,
       params=params,
       data=data,
       headers=headers,
