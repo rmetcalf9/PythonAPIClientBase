@@ -2,6 +2,7 @@
 
 class VerboseLoggingBaseClass():
     def log_call(
+        self,
         reqFn,
         url,
         params,
