@@ -2,6 +2,7 @@ import requests
 from .Mock import MockClass
 import threading
 from urllib.parse import urlencode
+from VerboseLogging import VerboseLoggingNullLogClass
 
 class APIClientException(Exception):
   result = None
@@ -26,8 +27,10 @@ class APIClientBase():
   mock = None
   baseURL = None
   requestLock = None
+  verboseLogging = None
 
-  def __init__(self, baseURL, mock=None, forceOneRequestAtATime=False):
+  def __init__(self, baseURL, mock=None, forceOneRequestAtATime=False, verboseLogging=VerboseLoggingNullLogClass()):
+    self.verboseLogging = verboseLogging
     if baseURL.endswith("/"):
       raise Exception("baseURL should not contain trailing slash: " + baseURL)
 
@@ -72,6 +75,15 @@ class APIClientBase():
           url += "?" + urlencode(params)
       return self.mock.returnNextResult(reqFnName=reqFn.__name__, url=url, data=data)
 
+    self.verboseLogging.log_call(
+      reqFn=reqFn.__name__,
+      url=url,
+      params=params,
+      data=data,
+      headers=headers,
+      postRefreshCall=postRefreshCall
+    )
+
     lockWasObtained = False
     try:
       if self.requestLock is not None:
@@ -109,6 +121,8 @@ class APIClientBase():
     finally:
       if lockWasObtained:
         self.requestLock.release()
+
+    self.verboseLogging.log_result(result)
 
     return result
 
