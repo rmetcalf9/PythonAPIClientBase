@@ -29,6 +29,7 @@ class VerboseLoggingOutputAllClass(VerboseLoggingBaseClass):
         self.include_data = include_data
 
     def log_call(
+        self,
         reqFn,
         url,
         params,
