@@ -59,6 +59,7 @@ class APIClientBase():
     return self.mock
 
   #skipLockCheck is used for when the refresh process itself is sending a request
+  # Note when updating params to this function, reflect that update in the refresh logic or there will be a refresh bug
   def sendRequest(self, reqFn, url, loginSession, data, origin, injectHeadersFn, postRefreshCall=False, skipLockCheck=False, params=None):
     # url must start with slash
     headers = {}
@@ -114,8 +115,9 @@ class APIClientBase():
             data=data,
             origin=origin,
             injectHeadersFn=injectHeadersFn,
+            postRefreshCall=True,
             skipLockCheck=True,
-            postRefreshCall=True
+            params=params
           )
         self.raiseResponseException(result)
     finally:
