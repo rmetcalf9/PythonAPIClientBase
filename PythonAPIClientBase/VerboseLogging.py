@@ -23,11 +23,13 @@ class VerboseLoggingOutputAllClass(VerboseLoggingBaseClass):
     call = None
     result = None
     include_data = None
+    redacted_headers = None
 
-    def __init__(self, call=True, include_data=True, result=True):
+    def __init__(self, call=True, include_data=True, result=True, redacted_headers=["Authorization"]):
         self.call = call
         self.result = result
         self.include_data = include_data
+        self.redacted_headers = redacted_headers
 
     def log_call(
         self,
@@ -47,7 +49,7 @@ class VerboseLoggingOutputAllClass(VerboseLoggingBaseClass):
         print("params", params)
         print("headers:")
         for header in headers:
-            if header == "Authorization":
+            if header in self.redacted_headers:
                 print("  ", header + ":", "REDACTED_BY_APL_CLIENT_LOGGER")
             else:
                 print("  ", header + ":", headers[header])
